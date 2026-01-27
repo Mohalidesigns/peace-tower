@@ -1,5 +1,13 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . '/phpmailer/src/Exception.php';
+require __DIR__ . '/phpmailer/src/PHPMailer.php';
+require __DIR__ . '/phpmailer/src/SMTP.php';
+require __DIR__ . '/smtp_config.php';
+
 // Only process POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: /');
@@ -25,26 +33,36 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Recipient email
-$to = "info@peace-tower.com";
+$mail = new PHPMailer(true);
 
-// Email headers
-$headers  = "From: $name <$email>\r\n";
-$headers .= "Reply-To: $email\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+try {
+    // SMTP settings
+    $mail->isSMTP();
+    $mail->Host       = SMTP_HOST;
+    $mail->SMTPAuth   = true;
+    $mail->Username   = SMTP_USER;
+    $mail->Password   = SMTP_PASS;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = SMTP_PORT;
 
-// Email body
-$email_body  = "New Contact Form Submission\n\n";
-$email_body .= "Name: $name\n";
-$email_body .= "Email: $email\n";
-$email_body .= "Phone: $phone\n";
-$email_body .= "Subject: $subject\n\n";
-$email_body .= "Message:\n$message\n";
+    // Sender and recipient
+    $mail->setFrom(SMTP_FROM, SMTP_FROM_NAME);
+    $mail->addAddress(SMTP_FROM); // Send to self
+    $mail->addReplyTo($email, $name);
 
-// Send email
-if (mail($to, $subject, $email_body, $headers)) {
-    header('Location: thank-you.html');
+    // Email content
+    $mail->isHTML(false);
+    $mail->Subject = $subject;
+    $mail->Body    = "New Contact Form Submission\n\n"
+                   . "Name: $name\n"
+                   . "Email: $email\n"
+                   . "Phone: $phone\n"
+                   . "Subject: $subject\n\n"
+                   . "Message:\n$message\n";
+
+    $mail->send();
+    header('Location: /thank-you.html');
     exit;
-} else {
+} catch (Exception $e) {
     echo "An error occurred while sending your message. Please try again later.";
 }
