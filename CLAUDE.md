@@ -14,7 +14,7 @@ Serve via XAMPP (or any PHP-capable web server) with the document root at this d
 
 **Template pattern:** Each page (index.php, aboutus.php, interior.php, exterior.php, floorplan.php, contact-us.php) includes `header.php` and `footer.php` via PHP `include`. There is no routing framework; `.htaccess` rewrites clean URLs (e.g., `/aboutus`) to their `.php` files and 301-redirects any `.php` URLs to the clean version.
 
-**Form handling:** `contact-us.php` POSTs to `/send`, which sanitizes input with `filter_input()`, validates the email, and sends via PHPMailer over SMTP (SSL, port 465). SMTP credentials are loaded from `smtp_config.php` (gitignored). On success, the user is redirected to `thank-you.html`.
+**Form handling:** `contact-us.php` POSTs to `/send`, which sanitizes input with `filter_input()`, validates the email, and sends via PHPMailer over SMTP (SSL, port 465). SMTP credentials are loaded from `smtp_config.php` (gitignored). On success or error, the user is redirected back to `/contact-us` with a `?sent=1` or `?error=1` query parameter, and `contact-us.php` displays a dismissible notification banner accordingly.
 
 **Frontend stack:**
 - Bootstrap 4 (grid, navbar, responsive utilities)
