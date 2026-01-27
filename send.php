@@ -61,8 +61,9 @@ try {
                    . "Message:\n$message\n";
 
     $mail->send();
-    header('Location: /thank-you.html');
+    header('Location: /contact-us?sent=1');
     exit;
 } catch (Exception $e) {
-    echo "An error occurred while sending your message. Please try again later.";
+    header('Location: /contact-us?error=1');
+    exit;
 }

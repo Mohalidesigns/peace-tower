@@ -1,3 +1,7 @@
+<?php
+$sent = isset($_GET['sent']) && $_GET['sent'] === '1';
+$error = isset($_GET['error']) && $_GET['error'] === '1';
+?>
 <!DOCTYPE html>
 <html lang="en">
     
@@ -73,6 +77,37 @@
             .submit_btn:hover {
                 background: #b08d62;
             }
+            .alert-notification {
+                padding: 20px 25px;
+                margin-bottom: 30px;
+                border-radius: 0;
+                font-size: 15px;
+                position: relative;
+            }
+            .alert-notification .close-alert {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                opacity: 0.7;
+            }
+            .alert-notification .close-alert:hover {
+                opacity: 1;
+            }
+            .alert-success-custom {
+                background: #d4edda;
+                border: 1px solid #c3e6cb;
+                color: #155724;
+            }
+            .alert-error-custom {
+                background: #f8d7da;
+                border: 1px solid #f5c6cb;
+                color: #721c24;
+            }
             .contact_info {
                 padding: 40px;
             }
@@ -107,13 +142,13 @@
         
         <div class="layout animsition">
         	<!--================Header Menu Area =================-->
-        	
+
         	
     <body>
         <div class="animsition">
         	<!--================Header Menu Area =================-->
 
-<header class="header_menu_area white_menu">
+			<header class="header_menu_area white_menu">
 				<nav class="navbar navbar-expand-lg navbar-light bg-light">
 					<a class="navbar-brand" href="/"><img src="asset/img/logo.png" alt=""><img src="asset/img/logo-dark.png" alt=""></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -149,7 +184,6 @@
         	<div class="click-capture"></div>
 			<div class="side_menu">
 				<span class="close-menu lnr lnr-cross right-boxed"></span>
-				
 				<ul class="menu-list right-boxed">
 					<li ><a href="/">Home</a></li>
 							<li><a href="/aboutus">About</a></li>
@@ -215,42 +249,53 @@
 					<div class="row">
 						<div class="col-lg-8">
 							<div class="contact_form">
+								<?php if ($sent): ?>
+								<div class="alert-notification alert-success-custom">
+									Your message has been sent successfully. We will get back to you shortly.
+									<button class="close-alert" onclick="this.parentElement.style.display='none'">&times;</button>
+								</div>
+								<?php elseif ($error): ?>
+								<div class="alert-notification alert-error-custom">
+									An error occurred while sending your message. Please try again.
+									<button class="close-alert" onclick="this.parentElement.style.display='none'">&times;</button>
+								</div>
+								<?php endif; ?>
 								<h3 style="margin-bottom: 30px;">Send us a Message</h3>
 							<form id="contactForm" method="POST" action="/send">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <input type="text" class="form-control" name="name" placeholder="Your Name *" required>
-            </div>
-        </div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<input type="text" class="form-control" name="name" placeholder="Your Name *" required>
+										</div>
+									</div>
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Your Email *" required>
-            </div>
-        </div>
-    </div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<input type="email" class="form-control" name="email" placeholder="Your Email *" required>
+										</div>
+									</div>
+								</div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <input type="tel" class="form-control" name="phone" placeholder="Phone Number *" required>
-            </div>
-        </div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<input type="tel" class="form-control" name="phone" placeholder="Phone Number *" required>
+										</div>
+									</div>
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <input type="text" class="form-control" name="subject" placeholder="Subject *" required>
-            </div>
-        </div>
-    </div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<input type="text" class="form-control" name="subject" placeholder="Subject *" required>
+										</div>
+									</div>
+								</div>
 
-    <div class="form-group">
-        <textarea class="form-control" name="message" placeholder="Your Message *" required></textarea>
-    </div>
+								<div class="form-group">
+									<textarea class="form-control" name="message" placeholder="Your Message *" required></textarea>
+								</div>
 
-    <button type="submit" class="submit_btn">Send Message</button>
-</form>
+								<button type="submit" class="submit_btn">Send Message</button>
+							</form>
 
 							</div>
 						</div>
@@ -288,7 +333,7 @@
 			
 			
 			<!--================Footer Area =================-->
-			@include('footer')
+			<?php include 'footer.php'; ?>
 
 			<!-- jQuery -->
 			<script src="asset/js/jquery-3.2.1.min.js"></script>
