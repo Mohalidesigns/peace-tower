@@ -216,7 +216,7 @@
 						<div class="col-lg-8">
 							<div class="contact_form">
 								<h3 style="margin-bottom: 30px;">Send us a Message</h3>
-							<form id="contactForm" method="POST" action="send.blade.php">
+							<form id="contactForm" method="POST" action="/send">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">

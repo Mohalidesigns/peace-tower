@@ -2,7 +2,7 @@
 
 // Only process POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: index.html');
+    header('Location: /');
     exit;
 }
 

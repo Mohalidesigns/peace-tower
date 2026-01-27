@@ -50,7 +50,7 @@
 			    submitHandler: function(form){
 		        	$.ajax({
 			            type: "POST",
-			            url:"mail.php",
+			            url:"/send",
 			            data: $(form).serialize(),
 			            success: function() {
 		                	$('.success-message').show();
