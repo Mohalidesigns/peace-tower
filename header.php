@@ -47,7 +47,7 @@
 							<li><a href="/interior">Interior</a></li>
 							<li><a href="/exterior">Exterior</a></li>
 							<li><a href="/floorplan">Floor Plan</a></li>
-							<li><a href="/contact">Contact</a></li>
+							<li><a href="/contact-us">Contact</a></li>
 				</ul>
 				<div class="menu-footer right-boxed">
 					<!--<div class="social-list">-->

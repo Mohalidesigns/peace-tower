@@ -79,13 +79,7 @@
 			</footer>
 				<!--================End Footer Area =================-->
         </div>
-		
-
-       
-        
-
-
-
+	
 
             <div class="page_lines white_br">
                 <div class="container">
